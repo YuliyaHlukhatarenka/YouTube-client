@@ -118,7 +118,7 @@
 @media screen and (max-width: 375px) {
   body {
     display: grid;
-    grid-template-rows: 7% 250px 15%;
+    grid-template-rows: 7% 300px 7%;
     grid-gap: 5px;
     justify-items: center;
     background-color: rgb(31, 29, 29);

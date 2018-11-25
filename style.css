@@ -118,7 +118,7 @@
 @media screen and (max-width: 375px) {
   body {
     display: grid;
-    grid-template-rows: 7% 350px 7%;
+    grid-template-rows: 7% 300px 7%;
     grid-gap: 5px;
     justify-items: center;
     background-color: rgb(31, 29, 29);
@@ -158,14 +158,14 @@
   }
 
   .video-title p {
-    height: 30px;
+    height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
   }
 
   .video-description {
-    height: 100px;
+    height: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
     font-style: italic;

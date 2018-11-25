@@ -74,7 +74,8 @@ export default class PageView {
 
       const rateContainer = this.element.document.createElement('div');
       rateContainer.className = 'video-rate';
-      //rateContainer.innerHTML = `<p>${videosArray[i].rate}</p>`;
+      rateContainer.innerHTML = `<p>Rate: ${videosArray[i].rate}</p>`;
+      fragment.appendChild(rateContainer);
 
       const descriptionContainer = this.element.document.createElement('div');
       descriptionContainer.className = 'video-description';
@@ -113,7 +114,6 @@ export default class PageView {
     for (let i = firstPage; i < firstPage + numOfPage; i += 1) {
       spanDot = this.element.document.createElement('span');
       spanDot.className = 'dot';
-      spanDot.title = currentPage;
       if (i === currentPage) {
         spanDot.className = 'dot dot-active';
       }

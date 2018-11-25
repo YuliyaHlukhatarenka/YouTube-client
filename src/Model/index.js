@@ -34,4 +34,15 @@ export default class PageModel {
     const resp = this.videos.slice((currentPage - 1) * videoPerPage, currentPage * videoPerPage);
     fn(resp);
   }
+
+  getRate(id) {
+    const xhr = new this.XMLHttpRequest();
+    xhr.open('GET', `https://www.googleapis.com/youtube/v3/videos?id=${id}&key=AIzaSyDWZ7h4sS6Z1YIrVy6kahJNvX-9WQdakvs&part=statistics`, false);
+    xhr.send();
+    if (xhr.status !== 200) {
+      throw new Error(xhr.status.concat(xhr.statusText));
+    } else {
+      return JSON.parse(xhr.responseText);
+    }
+  }
 }

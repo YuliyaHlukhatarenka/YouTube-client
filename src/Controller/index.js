@@ -24,16 +24,17 @@ export default class PageController {
     const str = document.getElementById('input-text').value;
     this.currentPage = 1;
     if (e.keyCode === 13) {
-      this.pageModel.getVideoArray(str, this.showVideos.bind(this), this.videoPerPage, this.currentPage);
+      this.pageModel.getVideoArray(str,
+        this.showVideos.bind(this),
+        this.videoPerPage,
+        this.currentPage);
     }
   }
-
 
   showVideos(response) {
     const videoArray = [];
     let i = 0;
     response.forEach((element) => {
-      console.log(element);
       videoArray[i] = {};
       videoArray[i].thumbnails = element.snippet.thumbnails.medium.url;
       videoArray[i].title = element.snippet.title;
@@ -41,8 +42,10 @@ export default class PageController {
       videoArray[i].publishedAt = element.snippet.publishedAt;
       videoArray[i].author = element.snippet.channelTitle;
       videoArray[i].id = element.id.videoId;
+      videoArray[i].rate = this.pageModel.getRate(videoArray[i].id).items[0].statistics.viewCount;
       i += 1;
     });
+
     this.pageView.render(videoArray, this.currentPage, this.numberOfPagingDots);
   }
 
@@ -72,6 +75,7 @@ export default class PageController {
   }
 
   switchToNextPage(e) {
+    console.log(e);
     if (e.target.innerText === '>') {
       this.currentPage += 1;
     }
@@ -81,6 +85,7 @@ export default class PageController {
     if ((e.target.innerText !== '>') && (e.target.innerText !== '<')) {
       this.currentPage = +e.target.innerText;
     }
+    //document.querySelector(`#dot${this.currentPage}`).title = this.currentPage;
 
     this.pageModel.getVideoArray('', this.showVideos.bind(this), this.videoPerPage, this.currentPage);
   }

@@ -31,26 +31,7 @@ export default class PageModel {
         }
       }
     }
-    const response = this.videos.slice((currentPage - 1) * videoPerPage, currentPage * videoPerPage);
-    fn(response);
+    const resp = this.videos.slice((currentPage - 1) * videoPerPage, currentPage * videoPerPage);
+    fn(resp);
   }
-
-  getNextVideoArray(searchStr, fn, videoPerPage, currentPage) {
-    const xhr = new this.XMLHttpRequest();
-    xhr.open(
-      'GET',
-      `https://www.googleapis.com/youtube/v3/search?pageToken=${this.nextPageToken}&key=AIzaSyBWtxPSToPQnHGveWXFkzYD1ICAh8XJeV4&type=video&part=snippet&maxResults=15&q=${searchStr}`,
-      false,
-    );
-    xhr.send();
-    if (xhr.status !== 200) {
-      alert(xhr.status + ': ' + xhr.statusText);
-    } else {
-      const newResponse = JSON.parse(xhr.responseText);
-
-    }
-    const response = this.videos.slice((currentPage - 1) * videoPerPage, currentPage * videoPerPage);
-    fn(response);
-  }
-
 }

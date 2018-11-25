@@ -3,7 +3,6 @@ export default class PageController {
     this.pageView = pageView;
     this.pageModel = pageModel;
     this.videoPerPage = 4;
-    this.searchStr = '';
     this.currentPage = 1;
     this.numberOfPagingDots = 2;
     this.x0 = null;
@@ -22,10 +21,10 @@ export default class PageController {
 
   onClickEnterInSearch(e) {
     this.measureWindowSize();
-    this.searchStr = document.getElementById('input-text').value;
-
+    const str = document.getElementById('input-text').value;
+    this.currentPage = 1;
     if (e.keyCode === 13) {
-      this.pageModel.getVideoArray(this.searchStr, this.showVideos.bind(this), this.videoPerPage, this.currentPage);
+      this.pageModel.getVideoArray(str, this.showVideos.bind(this), this.videoPerPage, this.currentPage);
     }
   }
 
@@ -40,6 +39,7 @@ export default class PageController {
       videoArray[i].title = element.snippet.title;
       videoArray[i].description = element.snippet.description;
       videoArray[i].publishedAt = element.snippet.publishedAt;
+      videoArray[i].author = element.snippet.channelTitle;
       videoArray[i].id = element.id.videoId;
       i += 1;
     });
@@ -65,7 +65,9 @@ export default class PageController {
   }
 
   redrawOnResize() {
+    const firstElementOnPage = (this.currentPage - 1) * this.videoPerPage + 1;
     this.measureWindowSize();
+    this.currentPage = Math.ceil(firstElementOnPage / this.videoPerPage);
     this.pageModel.getVideoArray('', this.showVideos.bind(this), this.videoPerPage, this.currentPage);
   }
 
@@ -84,11 +86,13 @@ export default class PageController {
   }
 
   swipeStart(e) {
-    this.x0 = e.clientX;
+    const evt = e.changedTouches ? e.changedTouches[0] : e;
+    this.x0 = evt.clientX;
   }
 
   swipeEnd(e) {
-    if ((this.x0 - e.clientX) > 0) {
+    const evt = e.changedTouches ? e.changedTouches[0] : e;
+    if ((this.x0 - evt.clientX) < 0) {
       if (this.currentPage !== 1) {
         document.getElementById('videos').style.setProperty('--i', '100%');
         this.currentPage -= 1;
@@ -101,10 +105,4 @@ export default class PageController {
     }
     this.x0 = null;
   }
-
-  static unify(e) {
-    return e.changedTouches ? e.changedTouches[0] : e;
-  }
-
-
 }

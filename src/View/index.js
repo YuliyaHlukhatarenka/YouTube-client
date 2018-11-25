@@ -27,7 +27,6 @@ export default class PageView {
     fragment.appendChild(videosContainer);
 
     const dotsContainer = this.element.document.createElement('div');
-    dotsContainer.className = 'navigation-dots';
     dotsContainer.id = 'dots';
     fragment.appendChild(dotsContainer);
 
@@ -43,41 +42,46 @@ export default class PageView {
     videosSection.innerHTML = '';
 
     for (let i = 0; i < videosArray.length; i += 1) {
+
       const videoContainer = this.element.document.createElement('div');
       videoContainer.className = 'video-section';
-      videoContainer.id = `${i}`;
+      videoContainer.style.height = '100%';
+      //videoContainer.id = `${i}`;
+      const fragment = this.element.document.createDocumentFragment();
+
       const videoImg = this.element.document.createElement('img');
       videoImg.setAttribute('src', `${videosArray[i].thumbnails}`);
       videoImg.setAttribute('alt', 'video thumbnail');
-      videoContainer.appendChild(videoImg);
-      videoImg.style.width = '300px';
-      videoImg.style.height = '200px';
-      videoContainer.style.height = '100%';
+      videoImg.className = 'video-img';
+      fragment.appendChild(videoImg);
+
       const titleContainer = this.element.document.createElement('div');
       titleContainer.className = 'video-title';
       titleContainer.addEventListener('mousedown', () => { openVideo(videosArray[i].id); });
+      titleContainer.addEventListener('touchend', () => { openVideo(videosArray[i].id); });
       titleContainer.innerHTML = `<p>${videosArray[i].title}</p>`;
-      videoContainer.appendChild(titleContainer);
+      fragment.appendChild(titleContainer);
+
+      const authorContainer = this.element.document.createElement('div');
+      authorContainer.className = 'video-author';
+      authorContainer.innerHTML = `<p>${videosArray[i].author}</p>`;
+      fragment.appendChild(authorContainer);
+
+      const publishedAtContainer = this.element.document.createElement('div');
+      publishedAtContainer.className = 'video-publishedAt';
+      publishedAtContainer.innerHTML = `<p>${videosArray[i].publishedAt}</p>`;
+      fragment.appendChild(publishedAtContainer);
+
+      const rateContainer = this.element.document.createElement('div');
+      rateContainer.className = 'video-rate';
+      //rateContainer.innerHTML = `<p>${videosArray[i].rate}</p>`;
 
       const descriptionContainer = this.element.document.createElement('div');
       descriptionContainer.className = 'video-description';
       descriptionContainer.innerHTML = `<p>${videosArray[i].description}</p>`;
-      videoContainer.appendChild(descriptionContainer);
+      fragment.appendChild(descriptionContainer);
 
-      const authorContainer = this.element.document.createElement('div');
-      authorContainer.className = 'video-description';
-     // authorContainer.innerHTML = `<p>${videosArray[i].description}</p>`;
-     //videoContainer.appendChild(descriptionContainer);
-
-      const publishedAtContainer = this.element.document.createElement('div');
-      publishedAtContainer.className = 'video-description';
-      publishedAtContainer.innerHTML = `<p>${videosArray[i].publishedAt}</p>`;
-      videoContainer.appendChild(publishedAtContainer);
-
-      const rateContainer = this.element.document.createElement('div');
-      rateContainer.className = 'video-description';
-      //rateContainer.innerHTML = `<p>${videosArray[i].rate}</p>`;
-
+      videoContainer.appendChild(fragment);
       videosSection.appendChild(videoContainer);
 
     }
@@ -126,15 +130,12 @@ export default class PageView {
 
 
     this.element.document.getElementById('videos').addEventListener('mousedown', this.swipeStart);
-    this.element.document.getElementById('videos').addEventListener('touchstart', this.swipeStart, false);
+    this.element.document.getElementById('videos').addEventListener('touchstart', this.swipeStart);
 
     this.element.document.getElementById('videos').addEventListener('mousedown', (e) => { e.preventDefault(); });
-    this.element.document.getElementById('videos').addEventListener('touchmove', (e) => { e.preventDefault(); }, false);
+    this.element.document.getElementById('videos').addEventListener('touchstart', (e) => { e.preventDefault(); });
 
     this.element.document.getElementById('videos').addEventListener('mouseup', this.swipeEnd);
-    this.element.document.getElementById('videos').addEventListener('touchend', this.swipeEnd, true);
-
-
+    this.element.document.getElementById('videos').addEventListener('touchend', this.swipeEnd);
   }
-
 }

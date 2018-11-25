@@ -114,11 +114,78 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+
+@media screen and (max-width: 375px) {
+  body {
+    display: grid;
+    grid-template-rows: 10% 300px 20%;
+    justify-items: center;
+    grid-gap: 20px;
+    background-color: rgb(31, 29, 29);
+    color: black;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+
   .videos-container {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 5px;
     align-items: center;
   }
+
+  .video-section {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    background-color: white;
+    border-radius: 1%;
+  }
+  .video-img {
+    position: relative;
+    top: 5px;
+    width: 200px;
+    height: 200px;
+  }
+
+  .video-title {
+    position: absolute;
+    top: 10%;
+    margin: 0 auto;
+    width: 100%;
+    height: 50px;
+    background: rgba(62, 97, 62, 0.8);
+    color: black;
+  }
+
+  .video-title p {
+    height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+
+  .video-description {
+    height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+    font-size: 0.8em;
+    padding: 5px;
+  }
+
+  .video-author {
+    height: 10px;
+    text-align: center;
+  }
+
+  .video-publishedAt {
+    height: 10px;
+    text-align: center;
+  }
+
+  .video-rate {
+    height: 10px;
+    text-align: center;
+  }
+
 }
